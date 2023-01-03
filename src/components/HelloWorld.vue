@@ -1,76 +1,62 @@
 <template>
-  <form id="table-form">
-    <label for="rows">Number of rows:</label>
-    <input type="number" id="rows" v-model="rows">
+  <div>
+    <table>
+      <tr v-for="rows in rows" :key="rows">
+       
+        <td v-for="columns in columns" :key="columns">{{ column }}</td>
+      </tr>
+    </table>
     <br>
-    <label for="columns">Number of columns:</label>
-    <input type="number" id="columns" v-model="columns">
+    <label>Rows:</label>
+    <input type="number" v-model="rows">
     <br>
-    <button v-on:click.prevent="generateTable">Generate table</button>
-  </form>
+    <label>Columns:</label>
+    <input type="number" v-model="columns">
+    <br>
+    <button @click="addRow">Add Row</button>
+    <button @click="deleteRow">Delete Row</button>
+    <button @click="addColumn">Add Column</button>
+    <button @click="deleteColumn">Delete Column</button>
+  </div>
 </template>
-6785
+
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
   data() {
-    return{
-    rows: 0,
-    columns: 0,
-  };
-  },
-  computed: {
-    tableData: function() {
-      // Generate the table data based on the number of rows and columns
-      var data = [];
-      for (var i = 0; i < this.rows; i++) {
-        var row = [];
-        for (var j = 0; j < this.columns; j++) {
-          row.push('');
-        }
-        data.push(row);
-      }
-      return data;
+    return {
+      rows: 2,
+      columns: 2
     }
   },
   methods: {
-    generateTable: function() {
-      // Generate the table using the table data
-      var table = document.createElement('table');
-      for (var i = 0; i < this.tableData.length; i++) {
-        var row = document.createElement('tr');
-        for (var j = 0; j < this.tableData[i].length; j++) {
-          var cell = document.createElement('td');
-          cell.textContent = this.tableData[i][j];
-          row.appendChild(cell);
-        }
-        table.appendChild(row);
+    addRow() {
+      this.rows++
+    },
+    deleteRow() {
+      if (this.rows > 1) {
+        this.rows--
       }
-      // Add the table to the page
-      document.body.appendChild(table);
+    },
+    addColumn() {
+      this.columns++
+    },
+    deleteColumn() {
+      if (this.columns > 1) {
+        this.columns--
+      }
     }
   }
 }
-
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style>
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+td {
+  border: 1px solid black;
+  padding: 8px;
 }
 </style>
