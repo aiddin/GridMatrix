@@ -10,7 +10,6 @@ import {
     Sparkline,
 } from "@progress/kendo-vue-charts";
 import '@progress/kendo-theme-default/dist/all.css';
-import "hammerjs";
 export default {
     components: {
         Sparkline,
@@ -39,7 +38,7 @@ export default {
 
 <style>
 .k-sparkline {
-    width: 150px !important;
-    height: 60px !important;
+    width: 15vw !important;
+    height: 10vw !important;
 }
 </style>

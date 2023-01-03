@@ -56,13 +56,13 @@ export default {
 
 <style>
 table {
-  border: 1px solid black;
+  border: 1vw solid black;
   border-collapse: collapse;
 }
 
 td {
-  border: 5px solid rgb(255, 255, 255);
+  border: 5vw solid rgb(255, 255, 255);
   background-color:  rgb(0, 0, 0);
-  padding: 10px;
+  padding: 1vw;
 }
 </style>
