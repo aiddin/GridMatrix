@@ -2,8 +2,9 @@
   <div>
     <table>
       <tr v-for="rows in rows" :key="rows">
-       
+       <div>
         <td v-for="columns in columns" :key="columns"> <TcSparkline :sparklineData="sparklineData"/></td>
+      </div>
       </tr>
     </table>
     <br>
@@ -18,6 +19,15 @@
     <button @click="addColumn">Add Column</button>
     <button @click="deleteColumn">Delete Column</button>
   </div>
+  <div>
+    <table>
+      <tr v-for="selectorrows in selectorrows" :key="selectorrows">
+       <div>
+        <td v-for="selectorcolumns in selectorcolumns" :key="selectorcolumns"></td>
+      </div>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -28,6 +38,8 @@ export default {
   },
   data() {
     return {
+      selectorrows: 10,
+      selectorcolumns: 10,
       rows: 2,
       columns: 2,
       sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007,1113,1113],
@@ -56,13 +68,18 @@ export default {
 
 <style>
 table {
-  border: 1vw solid black;
-  border-collapse: collapse;
+  border: 1px solid rgb(255, 1, 1);
+ 
 }
 
 td {
-  border: 5vw solid rgb(255, 255, 255);
+  border: 5px solid rgb(255, 255, 255);
+
   background-color:  rgb(0, 0, 0);
-  padding: 1vw;
+  
 }
+ tr{
+  border: 5px solid rgb(255, 255, 255);
+  background-color:  rgb(0, 0, 0);
+ }
 </style>
