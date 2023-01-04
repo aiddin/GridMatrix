@@ -6,34 +6,17 @@
         <td v-for="columns in columns" :key="columns"> <TcSparkline :sparklineData="sparklineData"/></td>
       </div>
       </tr>
-    </table>
-    <br>
-    <label>Rows:</label>
-    <input type="number" v-model="rows">
-    <br>
-    <label>Columns:</label>
-    <input type="number" v-model="columns">
-    <br>
-    <button @click="addRow">Add Row</button>
-    <button @click="deleteRow">Delete Row</button>
-    <button @click="addColumn">Add Column</button>
-    <button @click="deleteColumn">Delete Column</button>
+    </table>  
   </div>
   <div>
     <table>
       <tr v-for="(selectorrows,rowIndex) in selectorrows" :key="rowIndex">
         <td v-for="selectorcolumns in selectorcolumns" :key="selectorcolumns" @click="handleCellClick"></td>
-    
       </tr>
     </table>
   </div>
-  <div>
-    <table>
-      <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-        <td v-for="(cell, cellIndex) in row" :key="cellIndex" @click="handleCellClick">{{ cell }}</td>
-      </tr>
-    </table>
-  </div>
+  {{selectedColumn}}
+  {{selectedRow}}
 </template>
 
 <script>
@@ -50,32 +33,24 @@ export default {
       rows: 2,
       columns: 2,
       sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007,1113,1113],
-      row: [
-       
-      ]
+      selectedColumn:2,
+      selectedRow:2,
     }
   },
-  methods: {
-    onCellClick(event) {
-        const element = event.target;
-        const parent = element.parentNode;
-        const grandparent = parent.parentNode;
-       this.selectorrows = grandparent.querySelectorAll('tr');
-        const rowIndex = Array.prototype.indexOf.call( this.selectorrows, parent);
-        this.selectorcolumns = parent.querySelectorAll('td');
-        const cellIndex = Array.prototype.indexOf.call(this.selectorcolumns, element);
-        console.log(`Row index: ${rowIndex}`);
-        console.log(`Column index: ${cellIndex}`);
-      },
+  computed:{
 
+  },
+  methods: {
     handleCellClick(event) {
       // Get the element that was clicked
       const element = event.target;
       // Get the row index
-      const rowIndex = element.parentNode.rowIndex;
+      const rowIndex = element.parentNode.rowIndex+1;
       // Get the column index
-      const cellIndex = element.cellIndex;
+      const cellIndex = element.cellIndex+1;
       console.log(`Row index: ${rowIndex}, Column index: ${cellIndex}`);
+      this.selectedColumn=(cellIndex);
+      this.selectedRow=(rowIndex);
     },
     addRow() {
       this.rows++
@@ -104,7 +79,7 @@ table {
 }
 
 td {
-  border: 5px solid rgb(255, 255, 255);
+  border: 1vw solid rgb(7, 7, 7);
  cursor: pointer;
   background-color:  rgb(0, 0, 0);
   
