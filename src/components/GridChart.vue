@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <table>
+  <div>
+    <table style="width:1000px;height:720px;">
       <tr v-for="rows in rows" :key="rows">
         <div>
           <td v-for="columns in columns" :key="columns" @click="toggleDialog">
@@ -90,16 +90,18 @@ export default {
 
 <style>
 table {
-  border: auto solid rgb(255, 1, 1);
+ 
+  height: 10vh;
+  width: 10vh;
 }
 
 td {
-  border: 1vw solid rgb(7, 7, 7);
+ 
   cursor: pointer;
   background-color: rgb(0, 0, 0);
 }
 tr {
-  border: 1vw solid rgb(255, 255, 255);
+ 
   background-color: rgb(0, 0, 0);
 }
 </style>
