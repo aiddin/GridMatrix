@@ -37,8 +37,17 @@ export default {
       selectedRow:2,
     }
   },
-  computed:{
+  watch: {
+    selectedColumn:{ handler() {
+        this.columns=this.selectedColumn;
 
+      }
+    },
+    selectedRow:{ handler() {
+        this.rows=this.selectedRow;
+
+      }
+    }
   },
   methods: {
     handleCellClick(event) {
