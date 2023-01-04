@@ -21,10 +21,9 @@
   </div>
   <div>
     <table>
-      <tr v-for="selectorrows in selectorrows" :key="selectorrows">
-       <div>
-        <td v-for="selectorcolumns in selectorcolumns" :key="selectorcolumns" @click="onCellClick"></td>
-      </div>
+      <tr v-for="(selectorrows,rowIndex) in selectorrows" :key="rowIndex">
+        <td v-for="selectorcolumns in selectorcolumns" :key="selectorcolumns" @click="handleCellClick"></td>
+    
       </tr>
     </table>
   </div>
@@ -52,9 +51,7 @@ export default {
       columns: 2,
       sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007,1113,1113],
       row: [
-        ['A1', 'A2', 'A3'],
-        ['B1', 'B2', 'B3'],
-        ['C1', 'C2', 'C3']
+       
       ]
     }
   },
@@ -63,10 +60,10 @@ export default {
         const element = event.target;
         const parent = element.parentNode;
         const grandparent = parent.parentNode;
-        const  selectorrows = grandparent.querySelectorAll('tr');
-        const rowIndex = Array.prototype.indexOf.call( selectorrows, parent);
-        const selectorcolumns = parent.querySelectorAll('td');
-        const cellIndex = Array.prototype.indexOf.call(selectorcolumns, element);
+       this.selectorrows = grandparent.querySelectorAll('tr');
+        const rowIndex = Array.prototype.indexOf.call( this.selectorrows, parent);
+        this.selectorcolumns = parent.querySelectorAll('td');
+        const cellIndex = Array.prototype.indexOf.call(this.selectorcolumns, element);
         console.log(`Row index: ${rowIndex}`);
         console.log(`Column index: ${cellIndex}`);
       },
