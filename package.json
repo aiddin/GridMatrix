@@ -16,6 +16,7 @@
     "@progress/kendo-vue-charts": "^3.7.3",
     "@progress/kendo-vue-data-tools": "^3.7.3",
     "@progress/kendo-vue-dateinputs": "^3.7.3",
+    "@progress/kendo-vue-dialogs": "^3.7.3",
     "@progress/kendo-vue-dropdowns": "^3.7.3",
     "@progress/kendo-vue-grid": "^3.7.3",
     "@progress/kendo-vue-inputs": "^3.7.3",

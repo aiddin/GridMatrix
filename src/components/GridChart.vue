@@ -1,101 +1,105 @@
 <template>
-  <div>
+  <div >
     <table>
       <tr v-for="rows in rows" :key="rows">
-       <div>
-        <td v-for="columns in columns" :key="columns"> <TcSparkline :sparklineData="sparklineData"/></td>
-      </div>
-      </tr>
-    </table>  
-  </div>
-  <div>
-    <table>
-      <tr v-for="(selectorrows,rowIndex) in selectorrows" :key="rowIndex">
-        <td v-for="selectorcolumns in selectorcolumns" :key="selectorcolumns" @click="handleCellClick"></td>
+        <div>
+          <td v-for="columns in columns" :key="columns" @click="toggleDialog">
+            <TcSparkline :sparklineData="sparklineData" />
+          </td>
+        </div>
       </tr>
     </table>
   </div>
-  {{selectedColumn}}
-  {{selectedRow}}
+  <window
+    v-if="visible"
+    :initial-width="auto"
+    :initial-height="auto"
+    :title="'Grid Chart'"
+    :resizable="true"
+    @close="toggleDialog"
+    :style="{ height: '150px', cursor: 'default' }"
+  >
+    <div>
+      <table>
+        <tr v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
+          <td
+            v-for="selectorcolumns in selectorcolumns"
+            :key="selectorcolumns"
+            @click="handleCellClick"
+          ></td>
+        </tr>
+      </table>
+    </div>
+  </window>
+  {{ selectedColumn }}
+  {{ selectedRow }}
 </template>
 
 <script>
-import TcSparkline from './TcSparkline.vue'
-import "hammerjs"; 
+import TcSparkline from "./TcSparkline.vue";
+import { Window } from "@progress/kendo-vue-dialogs";
+
+import "hammerjs";
 export default {
   components: {
-    TcSparkline
+    TcSparkline,
+    window: Window,
   },
   data() {
     return {
+      visible: false,
       selectorrows: 10,
       selectorcolumns: 10,
       rows: 2,
       columns: 2,
-      sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007,1113,1113],
-      selectedColumn:2,
-      selectedRow:2,
-    }
+      sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007, 1113, 1113],
+      selectedColumn: 2,
+      selectedRow: 2,
+    };
   },
   watch: {
-    selectedColumn:{ handler() {
-        this.columns=this.selectedColumn;
-
-      }
+    selectedColumn: {
+      handler() {
+        this.columns = this.selectedColumn;
+      },
     },
-    selectedRow:{ handler() {
-        this.rows=this.selectedRow;
-
-      }
-    }
+    selectedRow: {
+      handler() {
+        this.rows = this.selectedRow;
+      },
+    },
   },
   methods: {
     handleCellClick(event) {
       // Get the element that was clicked
       const element = event.target;
       // Get the row index
-      const rowIndex = element.parentNode.rowIndex+1;
+      const rowIndex = element.parentNode.rowIndex + 1;
       // Get the column index
-      const cellIndex = element.cellIndex+1;
+      const cellIndex = element.cellIndex + 1;
       console.log(`Row index: ${rowIndex}, Column index: ${cellIndex}`);
-      this.selectedColumn=(cellIndex);
-      this.selectedRow=(rowIndex);
+      this.selectedColumn = cellIndex;
+      this.selectedRow = rowIndex;
     },
-    addRow() {
-      this.rows++
+    toggleDialog() {
+      this.visible = !this.visible;
     },
-    deleteRow() {
-      if (this.rows > 0) {
-        this.rows--
-      }
-    },
-    addColumn() {
-      this.columns++
-    },
-    deleteColumn() {
-      if (this.columns > 0) {
-        this.columns--
-      }
-    }
-  }
-}
+  },
+};
 </script>
 
 <style>
 table {
-  border: 1px solid rgb(255, 1, 1);
- 
+  border: auto solid rgb(255, 1, 1);
 }
 
 td {
   border: 1vw solid rgb(7, 7, 7);
- cursor: pointer;
-  background-color:  rgb(0, 0, 0);
-  
+  cursor: pointer;
+  background-color: rgb(0, 0, 0);
 }
- tr{
-  border: 5px solid rgb(255, 255, 255);
-  background-color:  rgb(0, 0, 0);
- }
+tr {
+  border: 1vw solid rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
+}
 </style>
- 
