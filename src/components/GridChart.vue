@@ -23,7 +23,7 @@
     <table>
       <tr v-for="selectorrows in selectorrows" :key="selectorrows">
        <div>
-        <td v-for="selectorcolumns in selectorcolumns" :key="selectorcolumns"></td>
+        <td v-for="selectorcolumns in selectorcolumns" :key="selectorcolumns" @click="onCellClick"></td>
       </div>
       </tr>
     </table>
@@ -59,6 +59,18 @@ export default {
     }
   },
   methods: {
+    onCellClick(event) {
+        const element = event.target;
+        const parent = element.parentNode;
+        const grandparent = parent.parentNode;
+        const  selectorrows = grandparent.querySelectorAll('tr');
+        const rowIndex = Array.prototype.indexOf.call( selectorrows, parent);
+        const selectorcolumns = parent.querySelectorAll('td');
+        const cellIndex = Array.prototype.indexOf.call(selectorcolumns, element);
+        console.log(`Row index: ${rowIndex}`);
+        console.log(`Column index: ${cellIndex}`);
+      },
+
     handleCellClick(event) {
       // Get the element that was clicked
       const element = event.target;
