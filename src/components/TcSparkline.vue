@@ -1,5 +1,5 @@
 <template>
-  <div style="width:250px; height:180px">
+  <div>
     <Sparkline
       @click="togglegradient"
       :transitions="false"
@@ -39,9 +39,8 @@ export default {
 };
 </script>
 
-<style>
+<!-- <style>
 .k-sparkline {
-  height: 100%;
-  width: 100%;
+
 }
-</style>
+</style> -->

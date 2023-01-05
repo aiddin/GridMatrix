@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <table style="width:1000px;height:720px;">
+  <div >
+    <table class="hehe">
       <tr v-for="rows in rows" :key="rows">
         <div>
           <td v-for="columns in columns" :key="columns" @click="toggleDialog">
-            <TcSparkline :sparklineData="sparklineData" />
+            <TcSparkline :sparklineData="sparklineData" class="test" />
           </td>
         </div>
       </tr>
@@ -20,9 +20,9 @@
     :style="{ height: '150px', cursor: 'default' }"
   >
     <div>
-      <table>
+      <table class="normal">
         <tr v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
-          <td
+          <td class="normal"
             v-for="selectorcolumns in selectorcolumns"
             :key="selectorcolumns"
             @click="handleCellClick"
@@ -81,6 +81,7 @@ export default {
       this.selectedColumn = cellIndex;
       this.selectedRow = rowIndex;
     },
+
     toggleDialog() {
       this.visible = !this.visible;
     },
@@ -89,19 +90,34 @@ export default {
 </script>
 
 <style>
-table {
- 
-  height: 10vh;
-  width: 10vh;
+.hehe {
+  width: 350px;
+  height: 100px;
+  border: 2px solid #7bff00;
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
+}
+table.normal {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000000;
+
 }
 
 td {
- 
   cursor: pointer;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(154, 22, 22);
+  flex-grow: 1;
+ 
+}
+td.normal {
+
+  cursor: pointer;
+  background-color: rgb(154, 22, 22);
 }
 tr {
- 
-  background-color: rgb(0, 0, 0);
+  overflow: ellipsis;
+  background-color: rgb(11, 90, 215);
 }
 </style>
