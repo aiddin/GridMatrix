@@ -1,6 +1,6 @@
 <template>
 
-  <GridChart msg="Welcome to Your Vue.js App"/>
+  <GridChart/>
 </template>
 
 <script>

@@ -39,8 +39,8 @@ export default {
 };
 </script>
 
-<!-- <style>
+<style>
 .k-sparkline {
-
+  
 }
-</style> -->
+</style>

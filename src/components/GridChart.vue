@@ -1,31 +1,41 @@
 <template>
+  <button @click="toggleDialog">window</button>
+
   <div >
-    <table class="hehe">
-      <tr v-for="rows in rows" :key="rows">
+    <br>
+
+    <table >
+      <tr v-for="(rows,rowIndex) in rows" :key="rowIndex">
         <div>
-          <td v-for="columns in columns" :key="columns" @click="toggleDialog">
-            <TcSparkline :sparklineData="sparklineData" class="test" />
+          <td class="normal" v-for="columns in columns" :key="columns" >
+            <TcSparkline :sparklineData="sparklineData" />
           </td>
         </div>
       </tr>
     </table>
   </div>
+
+
+
   <window
     v-if="visible"
-    :initial-width="auto"
-    :initial-height="auto"
+    :initial-width="300"
+    :initial-height="300"
     :title="'Grid Chart'"
     :resizable="true"
     @close="toggleDialog"
     :style="{ height: '150px', cursor: 'default' }"
   >
     <div>
+    
       <table class="normal">
-        <tr v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
+        <tr class="normal" v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
           <td class="normal"
             v-for="selectorcolumns in selectorcolumns"
             :key="selectorcolumns"
+            @mouseover="getCellIndex(rowIndex, selectorcolumns)"
             @click="handleCellClick"
+            
           ></td>
         </tr>
       </table>
@@ -34,7 +44,6 @@
   {{ selectedColumn }}
   {{ selectedRow }}
 </template>
-
 <script>
 import TcSparkline from "./TcSparkline.vue";
 import { Window } from "@progress/kendo-vue-dialogs";
@@ -48,13 +57,13 @@ export default {
   data() {
     return {
       visible: false,
-      selectorrows: 10,
-      selectorcolumns: 10,
+      selectorrows: 5,
+      selectorcolumns: 5,
       rows: 2,
       columns: 2,
       sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007, 1113, 1113],
-      selectedColumn: 2,
-      selectedRow: 2,
+      selectedColumn: 3,
+      selectedRow: 3,
     };
   },
   watch: {
@@ -70,6 +79,10 @@ export default {
     },
   },
   methods: {
+    getCellIndex(rowIndex, cellIndex) {
+      console.log(`Row index: ${rowIndex+1}`);
+      console.log(`Cell index: ${cellIndex}`);
+    },
     handleCellClick(event) {
       // Get the element that was clicked
       const element = event.target;
@@ -87,37 +100,43 @@ export default {
     },
   },
 };
+//table layout selected need to folow selectors
 </script>
-
 <style>
-.hehe {
-  width: 350px;
-  height: 100px;
-  border: 2px solid #7bff00;
-  display: flex;
-  flex-direction: column;
-  overflow-wrap: break-word;
-}
-table.normal {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #000000;
-
-}
-
-td {
-  cursor: pointer;
-  background-color: rgb(154, 22, 22);
-  flex-grow: 1;
+.test {
  
+  border: 1px solid #000000;
+  width: 200px;
+  height: 100px;
+  object-fit: scale-down;
 }
-td.normal {
+
+
+table {
+  table-layout: fixed;
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000000;
+}
+
+
+td{
 
   cursor: pointer;
   background-color: rgb(154, 22, 22);
 }
-tr {
-  overflow: ellipsis;
-  background-color: rgb(11, 90, 215);
+td.normal :hover  {
+
+
+  background-color: rgb(143, 52, 255);
+}
+
+tr.normal {
+  
+  background-color: rgb(11, 215, 69);
+}
+tr.normal :hover {
+  
+  background-color: rgb(255, 255, 255);
 }
 </style>
