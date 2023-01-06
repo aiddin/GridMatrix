@@ -4,8 +4,8 @@
   <div >
     <br>
 
-    <table >
-      <tr v-for="(rows,rowIndex) in rows" :key="rowIndex">
+    <table class="huh" >
+      <tr class="normal" v-for="(rows,rowIndex) in rows" :key="rowIndex">
         <div>
           <td class="normal" v-for="columns in columns" :key="columns" >
             <TcSparkline :sparklineData="sparklineData" />
@@ -28,9 +28,9 @@
   >
     <div>
     
-      <table class="normal">
-        <tr class="normal" v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
-          <td class="normal"
+      <table class="selector">
+        <tr  v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
+          <td 
             v-for="selectorcolumns in selectorcolumns"
             :key="selectorcolumns"
             @mouseover="getCellIndex(rowIndex, selectorcolumns)"
@@ -43,6 +43,9 @@
   </window>
   {{ selectedColumn }}
   {{ selectedRow }}
+  <br>
+  {{ hoverColumn }}
+  {{ hoverRow }}
 </template>
 <script>
 import TcSparkline from "./TcSparkline.vue";
@@ -59,6 +62,8 @@ export default {
       visible: false,
       selectorrows: 5,
       selectorcolumns: 5,
+      hoverColumn: 0,
+      hoverRow: 0,
       rows: 2,
       columns: 2,
       sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007, 1113, 1113],
@@ -67,6 +72,7 @@ export default {
     };
   },
   watch: {
+
     selectedColumn: {
       handler() {
         this.columns = this.selectedColumn;
@@ -80,9 +86,12 @@ export default {
   },
   methods: {
     getCellIndex(rowIndex, cellIndex) {
+      this.hoverColumn = cellIndex;
+      this.hoverRow = rowIndex+1;
       console.log(`Row index: ${rowIndex+1}`);
       console.log(`Cell index: ${cellIndex}`);
     },
+
     handleCellClick(event) {
       // Get the element that was clicked
       const element = event.target;
@@ -103,40 +112,33 @@ export default {
 //table layout selected need to folow selectors
 </script>
 <style>
-.test {
- 
+
+
+table.huh {
   border: 1px solid #000000;
-  width: 200px;
-  height: 100px;
-  object-fit: scale-down;
 }
-
-
-table {
-  table-layout: fixed;
+table.selector{
+  border: 1px solid #000000;
   width: 200px;
   height: 200px;
-  border: 1px solid #000000;
 }
-
 
 td{
 
   cursor: pointer;
   background-color: rgb(154, 22, 22);
 }
-td.normal :hover  {
-
+td:hover  {
 
   background-color: rgb(143, 52, 255);
 }
 
-tr.normal {
+tr {
   
   background-color: rgb(11, 215, 69);
 }
-tr.normal :hover {
+tr:hover {
   
   background-color: rgb(255, 255, 255);
-}
+} 
 </style>

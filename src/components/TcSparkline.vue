@@ -41,6 +41,7 @@ export default {
 
 <style>
 .k-sparkline {
-  
+  width: 10vw;
+  height: 5vw;
 }
 </style>
