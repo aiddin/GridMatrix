@@ -1,11 +1,31 @@
 <template>
   <button @click="toggleDialog">Grid Chart </button>
-  <button @click="showTablePicker">Grid Chart
-    
-  </button>
+  <window
+  v-if="visible"
+  :initial-width="300"
+  :initial-height="300"
+  :title="'Grid Chart'"
+  :resizable="true"
+  @close="toggleDialog"
+  :style="{ height: '150px', cursor: 'default' }"
+>
 <div id="tblpck">
+  <div>{{ hoverColumn }}X{{ hoverRow }} Table</div>
+<table>
+  <tr  v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
+    <td 
+      v-for="selectorcolumns in selectorcolumns"
+      :key="selectorcolumns"
 
+      @mouseover="atasMouse($event)"
+      @mouseenter="getCellIndex(rowIndex, selectorcolumns)"
+      @click="handleCellClick($event)"
+      
+    ></td>
+  </tr>
+</table>
 </div>
+</window>
 
   <div >
     <br>
@@ -23,30 +43,6 @@
 
 
 
-  <window
-    v-if="visible"
-    :initial-width="300"
-    :initial-height="300"
-    :title="'Grid Chart'"
-    :resizable="true"
-    @close="toggleDialog"
-    :style="{ height: '150px', cursor: 'default' }"
-  >
-    <div>
-    
-      <table class="selector">
-        <tr  v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
-          <td 
-            v-for="selectorcolumns in selectorcolumns"
-            :key="selectorcolumns"
-            @mouseover="getCellIndex(rowIndex, selectorcolumns)"
-            @click="handleCellClick"
-            
-          ></td>
-        </tr>
-      </table>
-    </div>
-  </window>
   {{ selectedColumn }}
   {{ selectedRow }}
   <br>
@@ -65,9 +61,11 @@ export default {
   },
   data() {
     return {
+      rowCount: 0,
+      colCount: 0,
       visible: false,
-      selectorrows: 5,
-      selectorcolumns: 5,
+      selectorrows: 10,
+      selectorcolumns: 10,
       hoverColumn: 0,
       hoverRow: 0,
       rows: 2,
@@ -94,64 +92,27 @@ export default {
     
   },
   methods: {
-    async showTablePicker() {
-        let [colCount, rowCount] = await this.tablePicker();
-          this.selectedColumn = colCount;
-        this.selectedRow = rowCount;
-        console.log(JSON.stringify({ colCount, rowCount }));
-      },
-      
-      tablePicker() {
-        return new Promise(resolve => {
-          let div = document.querySelector("#tblpck");
-          if (div) div.remove();
-          let colCount = 0;
-          let rowCount = 0;
-          div = document.createElement("div");
-          div.setAttribute("id", "tblpck");
-          div.innerHTML = `<style>
-              #tblpck div{background:#ccc;font-family:Verdana;text-align:right}
-              #tblpck table{border-spacing:3px;background:#f8f8f8}
-              #tblpck td{border:1px solid #888;width:16px;height:16px;box-sizing:border-box}
-              #tblpck .tblpckhighlight{border:2px solid orange;}
-          </style><div>0x0 Table</div>
-          <table>${`<tr>${`<td></td>`.repeat(10)}</tr>`.repeat(10)}</table>`;
-          document.body.appendChild(div);
-          Object.assign(div.style, {
-            left: this.x + "px",
-            top: this.y + "px",
-            position: "absolute",
-            border: "1px solid #ccc"
-          });
-  
-          div.onmouseover = e => {
-            if (e.target.tagName !== "TD") return;
+      atasMouse(e){
+        if (e.target.tagName !== "TD") return;
             let td = e.target;
             let tr = td.parentNode;
             let table = tr.parentNode;
-            colCount = td.cellIndex + 1;
-            rowCount = tr.rowIndex + 1;
+            this.colCount = td.cellIndex + 1;
+            this.rowCount = tr.rowIndex + 1;
             for (let row of table.rows) {
-              let inside = row.rowIndex < rowCount;
+              let inside = row.rowIndex < this.rowCount;
               for (let cell of row.cells) {
                 cell.classList.toggle(
                   "tblpckhighlight",
-                  inside && cell.cellIndex < colCount
+                  inside && cell.cellIndex < this.colCount
                 );
+
               }
+              
             }
-            div.children[1].textContent = `${colCount}x${rowCount} Table`;
+           
             return false;
-          };
-  
-          div.onmousedown = () => {
-            div.remove();
-            resolve([colCount, rowCount]);
-          };
-        });
       },
-
-
     getCellIndex(rowIndex, cellIndex) {
       this.hoverColumn = cellIndex;
       this.hoverRow = rowIndex+1;
@@ -205,6 +166,12 @@ tr {
   border-color: #000000;
   background-color: rgb(11, 215, 69);
 }
-
-
+tr:hover :nth-of-type(1){
+  background-color: rgb(255, 255, 255);
+  
+} 
+#tblpck div{background:#ccc;font-family:Verdana;text-align:right}
+#tblpck table{border-spacing:3px;background:#f8f8f8}
+#tblpck td{border:1px solid #888;width:16px;height:16px;box-sizing:border-box}
+#tblpck .tblpckhighlight{border:2px solid orange;}
 </style>
