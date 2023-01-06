@@ -45,9 +45,7 @@
 
   {{ selectedColumn }}
   {{ selectedRow }}
-  <br>
-  {{ hoverColumn }}
-  {{ hoverRow }}
+
 </template>
 <script>
 import TcSparkline from "./TcSparkline.vue";
@@ -88,9 +86,7 @@ export default {
       },
     },
   },
-  computed:{
-    
-  },
+
   methods: {
       atasMouse(e){
         if (e.target.tagName !== "TD") return;
@@ -140,7 +136,6 @@ export default {
 //table layout selected need to folow selectors
 </script>
 <style>
-
 
 table.huh {
   border: 1px solid #000000;
