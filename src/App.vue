@@ -1,6 +1,13 @@
 <template>
 
-  <GridChart/>
+  <GridChart :row="row"
+  :column="column"
+  :isVisible="isVisible"
+  :highlight="highlight"
+  :cellColor="cellColor"
+  :endPoint="endPoint"
+ 
+  />
 
 </template>
 
@@ -11,6 +18,17 @@ export default {
   name: 'App',
   components: {
     GridChart
+    
+  },
+  data(){
+    return {
+      row:5,
+      column:5,
+      isVisible: true,
+      highlight : 'blue',
+      cellColor: '#808080',
+      endPoint: '#FFD700'
+    }
   }
 }
 </script>
