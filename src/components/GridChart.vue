@@ -24,7 +24,7 @@
       </table>
     </div>
   </window>
-  <div>
+  <div>   
     <br />
     <table class="huh">
       <tr class="normal" v-for="(rows, rowIndex) in rows" :key="rowIndex">
