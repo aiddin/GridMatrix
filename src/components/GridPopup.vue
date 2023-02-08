@@ -5,7 +5,6 @@
     :initial-height="300"
     :title="'Grid Chart'"
     :resizable="true"
-    @close="toggleDialog"
     :style="{ height: '150px', cursor: 'default' }"
   >
     <div id="tblpck">
