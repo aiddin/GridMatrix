@@ -1,36 +1,47 @@
 <template>
-  <button @click="toggleDialog">Grid Chart</button>
-
-  <div>   
-    <br />
-    <table class="huh">
-      <tr class="normal" v-for="(rows, rowIndex) in rows" :key="rowIndex">
-        <div>
-          <td class="normal" v-for="columns in columns" :key="columns">
-            <TcSparkline :sparklineData="sparklineData" />
-          </td>
-        </div>
-      </tr>
-    </table>
-  </div>
+    <window
+    v-if="visible"
+    :initial-width="300"
+    :initial-height="300"
+    :title="'Grid Chart'"
+    :resizable="true"
+    @close="toggleDialog"
+    :style="{ height: '150px', cursor: 'default' }"
+  >
+    <div id="tblpck">
+      <div v-show="dimensionVisible">{{ hoverColumn }}X{{ hoverRow }} Table</div>
+      <table>
+        <tr v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
+          <td id="tblpck"
+            v-for="selectorcolumns in selectorcolumns"
+            :key="selectorcolumns"
+            @mouseover="atasMouse($event)"
+            @mouseenter="getCellIndex(rowIndex, selectorcolumns)"
+            @click="handleCellClick($event),toggleDialog"
+          ></td>
+        </tr>
+      </table>
+    </div>
+  </window>
 </template>
 <script>
-import TcSparkline from "./TcSparkline.vue";
+import { Window } from "@progress/kendo-vue-dialogs";
 
 import "hammerjs";
 export default {
-  props:["row","column","isVisible","highlight","cellColor","endPoint"],
+  props:["visible"],
   components: {
-    TcSparkline,
+    
+    window: Window,
   },
   data() {
     return {
       rowCount: 0,
       colCount: 0,
-      visible: false,
-      selectorrows: this.row,
-      selectorcolumns: this.column,
-      dimensionVisible:  this.isVisible,
+      
+      selectorrows: 5,
+      selectorcolumns: 5,
+      dimensionVisible:  true,
       hoverColumn: 0,
       hoverRow: 0,
       rows: 3,
@@ -41,6 +52,7 @@ export default {
     };
   },
   watch: {
+    
     selectedColumn: {
       handler() {
         this.columns = this.selectedColumn;
@@ -95,9 +107,7 @@ export default {
       this.toggleDialog();
     },
 
-    toggleDialog() {
-      this.visible = !this.visible;
-    },
+   
   },
 };
 //table layout selected need to folow selectors
@@ -136,15 +146,15 @@ tr {
 }
 #tblpck td {
   border: 1px solid #888;
-  background-color: v-bind(cellColor);
+  background-color: wheat;
   width: 16px;
   height: 16px;
   box-sizing: border-box;
 }
 #tblpck td:hover{
-  background-color: v-bind(endPoint);
+  background-color: red;
 }
 #tblpck .tblpckhighlight {
-  border: 2px solid v-bind(highlight);
+  border: 2px solid rgb(84, 58, 24);
 }
 </style>

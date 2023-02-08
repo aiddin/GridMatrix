@@ -13,7 +13,6 @@
 
 <script>
 import GridChart from './components/GridChart.vue'
-
 export default {
   name: 'App',
   components: {
