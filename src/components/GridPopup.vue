@@ -1,6 +1,5 @@
 <template>
-    <window
-    
+  <window
     :initial-width="300"
     :initial-height="300"
     :title="'Grid Chart'"
@@ -11,12 +10,13 @@
       <div v-show="dimensionVisible">{{ hoverColumn }}X{{ hoverRow }} Table</div>
       <table>
         <tr v-for="(selectorrows, rowIndex) in selectorrows" :key="rowIndex">
-          <td id="tblpck"
+          <td
+            id="tblpck"
             v-for="selectorcolumns in selectorcolumns"
             :key="selectorcolumns"
             @mouseover="atasMouse($event)"
             @mouseenter="getCellIndex(rowIndex, selectorcolumns)"
-            @click="handleCellClick($event),toggleDialog"
+            @click="handleCellClick()"
           ></td>
         </tr>
       </table>
@@ -28,19 +28,18 @@ import { Window } from "@progress/kendo-vue-dialogs";
 
 import "hammerjs";
 export default {
-  props:["visible"],
   components: {
-    
     window: Window,
   },
   data() {
     return {
       rowCount: 0,
       colCount: 0,
-      
+      childData: 0,
+      childData2: 0,
       selectorrows: 5,
       selectorcolumns: 5,
-      dimensionVisible:  true,
+      dimensionVisible: true,
       hoverColumn: 0,
       hoverRow: 0,
       rows: 3,
@@ -51,7 +50,6 @@ export default {
     };
   },
   watch: {
-    
     selectedColumn: {
       handler() {
         this.columns = this.selectedColumn;
@@ -64,10 +62,10 @@ export default {
     },
   },
   computed: {
-    tblpckStyle(){
+    tblpckStyle() {
       return {
-        'huh': JSON.stringify(this.highlight),
-      }
+        huh: JSON.stringify(this.highlight),
+      };
     },
   },
   methods: {
@@ -97,16 +95,15 @@ export default {
       console.log(`Cell index: ${cellIndex}`);
     },
 
-    handleCellClick(event) {
-      const element = event.target;
-      const rowIndex = element.parentNode.rowIndex + 1;
-      const cellIndex = element.cellIndex + 1;
-      this.selectedColumn = cellIndex;
-      this.selectedRow = rowIndex;
-      this.toggleDialog();
+    handleCellClick() {
+      // const element = event.target;
+      // const rowIndex = element.parentNode.rowIndex + 1;
+      // const cellIndex = element.cellIndex + 1;
+      // this.selectedColumn = cellIndex;
+      // this.selectedRow = rowIndex;
+      this.$emit("childData2", this.hoverRow);
+      this.$emit("childData", this.hoverColumn);
     },
-
-   
   },
 };
 //table layout selected need to folow selectors
@@ -132,7 +129,6 @@ td:hover {
 }
 tr {
   border-color: #000000;
- 
 }
 #tblpck div {
   background: rgb(255, 255, 255);
@@ -150,7 +146,7 @@ tr {
   height: 16px;
   box-sizing: border-box;
 }
-#tblpck td:hover{
+#tblpck td:hover {
   background-color: red;
 }
 #tblpck .tblpckhighlight {

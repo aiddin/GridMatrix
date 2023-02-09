@@ -1,7 +1,7 @@
 <template>
   <button @click="toggleDialog">Grid Chart</button>
-<GridPopup v-if="visible" @close="toggleDialog" />
-  <div>   
+  <GridPopup @childData="receiveDataFromChild" @childData2="receiveDataFromChild2" v-if="visible" @close="toggleDialog" />
+  <div>
     <br />
     <table class="huh">
       <tr class="normal" v-for="(rows, rowIndex) in rows" :key="rowIndex">
@@ -19,10 +19,10 @@ import TcSparkline from "./TcSparkline.vue";
 import GridPopup from "./GridPopup.vue";
 import "hammerjs";
 export default {
-  props:["row","column","isVisible","highlight","cellColor","endPoint"],
+  props: ["row", "column", "isVisible", "highlight", "cellColor", "endPoint"],
   components: {
     TcSparkline,
-    GridPopup
+    GridPopup,
   },
   data() {
     return {
@@ -31,10 +31,10 @@ export default {
       visible: false,
       selectorrows: this.row,
       selectorcolumns: this.column,
-      dimensionVisible:  this.isVisible,
+      dimensionVisible: this.isVisible,
       hoverColumn: 0,
       hoverRow: 0,
-      rows: 3,
+      rows: 4,
       columns: 3,
       sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007, 1113, 1113],
       selectedColumn: 3,
@@ -54,13 +54,19 @@ export default {
     },
   },
   computed: {
-    tblpckStyle(){
+    tblpckStyle() {
       return {
-        'huh': JSON.stringify(this.highlight),
-      }
+        huh: JSON.stringify(this.highlight),
+      };
     },
   },
   methods: {
+    receiveDataFromChild(data) {
+      this.selectedColumn =data
+    },
+    receiveDataFromChild2(data) {
+      this.selectedRow =data
+    },
     atasMouse(e) {
       if (e.target.tagName !== "TD") return;
       let td = e.target;
@@ -124,7 +130,6 @@ td:hover {
 }
 tr {
   border-color: #000000;
- 
 }
 #tblpck div {
   background: rgb(255, 255, 255);
@@ -142,7 +147,7 @@ tr {
   height: 16px;
   box-sizing: border-box;
 }
-#tblpck td:hover{
+#tblpck td:hover {
   background-color: v-bind(endPoint);
 }
 #tblpck .tblpckhighlight {
