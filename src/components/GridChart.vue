@@ -34,7 +34,7 @@ export default {
       dimensionVisible: this.isVisible,
       hoverColumn: 0,
       hoverRow: 0,
-      rows: 4,
+      rows: 3,
       columns: 3,
       sparklineData: [936, 968, 1025, 999, 998, 1014, 1017, 1010, 1010, 1007, 1113, 1113],
       selectedColumn: 3,
