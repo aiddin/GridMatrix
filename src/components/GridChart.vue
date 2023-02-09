@@ -1,6 +1,6 @@
 <template>
   <button @click="toggleDialog">Grid Chart</button>
-
+<GridPopup v-if="visible" @close="toggleDialog" />
   <div>   
     <br />
     <table class="huh">
@@ -16,12 +16,13 @@
 </template>
 <script>
 import TcSparkline from "./TcSparkline.vue";
-
+import GridPopup from "./GridPopup.vue";
 import "hammerjs";
 export default {
   props:["row","column","isVisible","highlight","cellColor","endPoint"],
   components: {
     TcSparkline,
+    GridPopup
   },
   data() {
     return {

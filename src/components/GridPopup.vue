@@ -1,6 +1,6 @@
 <template>
     <window
-    v-if="visible"
+    
     :initial-width="300"
     :initial-height="300"
     :title="'Grid Chart'"
