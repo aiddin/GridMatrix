@@ -1,3 +1,4 @@
+// This is the popup that appears when you click on the grid button
 <template>
   <window
     :initial-width="300"

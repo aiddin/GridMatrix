@@ -1,3 +1,4 @@
+//component to initialize gridchart
 <template>
   <button @click="toggleDialog">Grid Chart</button>
   <GridPopup @childData="receiveDataFromChild" @childData2="receiveDataFromChild2" v-if="visible" @close="toggleDialog" />
